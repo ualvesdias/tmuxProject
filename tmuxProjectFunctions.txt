@@ -1,0 +1,15 @@
+function sc {
+        DATE=$(date +"%Y-%m-%d--%H:%M") # Get the current timestamp
+        [ ! -d "ScriptLogs" ] && mkdir -p "ScriptLogs" # Create a folder called "ScriptLogs" if there isn't one
+        script -a -f ./ScriptLogs/$1-$DATE.log # Call script with -a for append to the file if it already exists and -f for flush the stdout
+}
+
+function npt {
+        tmux new-session -s $1 -n MONITOR \; \
+                split-window -v -p 70 \; split-window -h -p 40 \; send-keys 'htop' C-m \; select-pane -t 2 \; send-keys 'checkip' C-m \; split-window -h -p 70 \; send-keys 'tcpdump -n -vvv -i eth0' C-m \; select-pane -t 2 \; split-window -v -p 30 \; send-keys 'ipi' C-m \; select-pane -t 1 \; split-window -h -p 30 \; send-keys 'postweb' C-m \; select-pane -t 1 \; \
+                new-window -n RECON \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -h \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -v \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; select-pane -t 1 \; \
+                new-window -n SCAN \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -h \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -v \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; select-pane -t 1 \; \
+                new-window -n CODE \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -h \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; select-pane -t 1 \; \
+                new-window -n SHELLS \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -h \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; split-window -v \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; select-pane -t 1 \; split-window -v \; send-keys "sc $1" C-m \; send-keys 'clear' C-m \; select-pane -t 1 \; \
+                select-window -t 1
+}
