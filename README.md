@@ -5,4 +5,8 @@ A small shell script function called npt (new pentest in tmux) that allows to cr
 The main idea here is to use this when you are working on a large project that demands a lot of terminals, which requires a nice level of organization so you don't lose track of your work and also logs everything that's being done.  
 
 Put these functions in your .bashrc|.zshrc file and then:  
-`source <.bashrc|.zshrc>`
+`source <.bashrc|.zshrc>`  
+
+To use the function, call it passing a name for the new session. This name will also be used in the script log name. 
+
+`npt <name>`
